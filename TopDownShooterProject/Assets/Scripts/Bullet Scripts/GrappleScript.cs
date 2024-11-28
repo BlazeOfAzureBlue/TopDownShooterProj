@@ -21,7 +21,7 @@ public class GrappleScript : MonoBehaviour
         }
         else
         {
-            rigidbody.mass = 10000;
+            rigidbody.simulated = false;
             StartCoroutine(BeginPull(player));
         }
     }
@@ -31,7 +31,7 @@ public class GrappleScript : MonoBehaviour
         while ((enemy.transform.position - player.transform.position).magnitude > 0.1)
         {
             yield return new WaitForEndOfFrame();
-            enemy.transform.position = Vector3.MoveTowards(enemy.transform.position, player.transform.position, 1f);
+            enemy.transform.position = Vector3.MoveTowards(enemy.transform.position, player.transform.position, 0.1f);
         }
         EnemyScript enemyCode = enemy.GetComponent<EnemyScript>();
         enemyCode.GetGrappled();
@@ -43,7 +43,7 @@ public class GrappleScript : MonoBehaviour
         while ((transform.position - player.transform.position).magnitude > 0.1)
         {
             yield return new WaitForEndOfFrame();
-            player.transform.position = Vector3.MoveTowards(player.transform.position, transform.position, 1f);
+            player.transform.position = Vector3.MoveTowards(player.transform.position, transform.position, 0.1f);
         }
         Destroy(transform.gameObject);
 

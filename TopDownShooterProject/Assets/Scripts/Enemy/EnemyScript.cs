@@ -32,6 +32,10 @@ public class EnemyScript : MonoBehaviour
 
     private bool IsFrozen;
 
+    public GameObject HealthPickup;
+    public GameObject AmmoPickup;
+    PlayerHealthScript playerHealth; 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -39,14 +43,14 @@ public class EnemyScript : MonoBehaviour
         rigidbody = GetComponent<Rigidbody2D>();
         playerCharacter = GameObject.Find("Player").transform;
         enemyManager = GameObject.Find("EnemyManager").GetComponent<EnemyManager>();
-
+        playerHealth = GameObject.Find("GameManager").GetComponent<PlayerHealthScript>();
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(MindBlasted == false)
+        if(MindBlasted == false && playerHealth.playerDead == false)
         {
             Vector3 direction = (playerCharacter.position - transform.position).normalized;
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
@@ -60,9 +64,12 @@ public class EnemyScript : MonoBehaviour
             GameObject closestEnemy = null;
             foreach (GameObject enemy in enemyManager.enemies)
             {
-                if((enemy.transform.position -  transform.position).magnitude < PreviousMag)
+                if(enemy != null)
                 {
-                    closestEnemy = enemy;
+                    if ((enemy.transform.position - transform.position).magnitude < PreviousMag)
+                    {
+                        closestEnemy = enemy;
+                    }
                 }
             }
             if(closestEnemy != null)
@@ -87,6 +94,18 @@ public class EnemyScript : MonoBehaviour
 
     }
 
+    public void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.CompareTag("Enemy") && MindBlasted == true)
+        {
+            EnemyScript enemyCode = gameObject.gameObject.GetComponent<EnemyScript>();
+            enemyCode.TakeDamage(1);
+        }
+        else if(collision.gameObject.CompareTag("Player"))
+        { 
+            playerHealth.OnHit();
+        }
+    }
     public void IncreasePoison()
     {
         PoisonCounter += 1;
@@ -156,7 +175,6 @@ public class EnemyScript : MonoBehaviour
 
     private void  Knockback(Vector3 direction)
     {
-        print("ok");
         rigidbody.velocity = Vector2.zero;
         rigidbody.AddForce(direction * 100, ForceMode2D.Impulse);
     }
@@ -164,8 +182,6 @@ public class EnemyScript : MonoBehaviour
     {
         chillCountdown += Time.deltaTime;
         beingChilled = true;
-        print(chillCountdown);
-        print(beingChilled);
         if(chillCountdown > 0.5 && beingChilled == true)
         {
             chillCountdown = 0;
@@ -195,6 +211,19 @@ public class EnemyScript : MonoBehaviour
         health -= damageAmount;
         if(health <= 0)
         {
+            int RandomChance = UnityEngine.Random.Range(0, 11);
+            if(RandomChance == 5)
+            {
+                int PickupDecision = UnityEngine.Random.Range(0, 2);
+                if(PickupDecision == 0)
+                {
+                    Instantiate(HealthPickup, transform.position, Quaternion.identity);
+                }
+                else
+                {
+                    Instantiate(AmmoPickup, transform.position, Quaternion.identity);
+                }
+            }
             Destroy(gameObject);
         }
     }

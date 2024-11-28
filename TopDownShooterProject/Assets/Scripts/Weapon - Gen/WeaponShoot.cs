@@ -123,7 +123,8 @@ public class WeaponShoot : MonoBehaviour
                 PunchTimeHeld = 0;
             }
             if(WeaponInformation.WeaponName == "Grenade" && GrenadeBeingHeld == true)
-            { 
+            {
+                AmmoManager.FireShot();
                 createdBullet = Instantiate(bullet, BulletTransform.transform.position, Quaternion.identity);
                 createdBullet.transform.position = BulletTransform.transform.position;
                 GrenadeScript grenadeCode = createdBullet.GetComponent<GrenadeScript>();
@@ -133,6 +134,7 @@ public class WeaponShoot : MonoBehaviour
             }
             if (WeaponInformation.WeaponName == "Crossbow" && CrossbowBeingHeld == true)
             {
+                AmmoManager.FireShot();
                 createdBullet = Instantiate(bullet, BulletTransform.transform.position, Quaternion.identity);
                 createdBullet.transform.position = BulletTransform.transform.position;
                 CrossbowScript crossbowCode = createdBullet.GetComponent<CrossbowScript>();
@@ -194,7 +196,7 @@ public class WeaponShoot : MonoBehaviour
                     CanFire = false;
                     mousePos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
                     Vector3 direction = mousePos;
-                    createdBullet = Instantiate(bullet, BulletTransform.transform.position + new Vector3(direction.x, direction.y).normalized * 1.6f, BulletTransform.transform.rotation);
+                    createdBullet = Instantiate(bullet, BulletTransform.transform.position + transform.right * 1.5f, BulletTransform.transform.rotation);
                     createdBullet.transform.parent = BulletTransform.transform;
                 }
                 if (PunchTimeHeld > 1.1)
@@ -220,9 +222,9 @@ public class WeaponShoot : MonoBehaviour
             {
                 GrenadeBeingHeld = true;
                 GrenadeTimeHeld += Time.deltaTime;
-                AmmoManager.FireShot();
                 if (GrenadeTimeHeld >= 3)
                 {
+                    AmmoManager.FireShot();
                     createdBullet = Instantiate(bullet, BulletTransform.transform.position, Quaternion.identity);
                     createdBullet.transform.position = BulletTransform.transform.position;
                     GrenadeScript grenadeCode = createdBullet.GetComponent<GrenadeScript>();
@@ -236,9 +238,9 @@ public class WeaponShoot : MonoBehaviour
             {
                 CrossbowBeingHeld = true;
                 CrossbowTimeHeld += Time.deltaTime;
-                AmmoManager.FireShot();
                 if (CrossbowTimeHeld >= 5)
                 {
+                    AmmoManager.FireShot();
                     createdBullet = Instantiate(bullet, BulletTransform.transform.position, Quaternion.identity);
                     createdBullet.transform.position = BulletTransform.transform.position;
                     CrossbowScript crossbowCode = createdBullet.GetComponent<CrossbowScript>();
@@ -267,7 +269,7 @@ public class WeaponShoot : MonoBehaviour
                     {
                         AmmoManager.FireShot();
                         CanFire = false;
-                        createdBullet = Instantiate(bullet, BulletTransform.transform.position + Vector3.right * 2f, gun.transform.rotation * Quaternion.Euler(new Vector3(0f, 0f, 90f)));
+                        createdBullet = Instantiate(bullet, BulletTransform.transform.position + transform.forward * 5, gun.transform.rotation * Quaternion.Euler(new Vector3(0f, 0f, 90f)));
                     }
                     switch (WeaponInformation.WeaponName)
                     {

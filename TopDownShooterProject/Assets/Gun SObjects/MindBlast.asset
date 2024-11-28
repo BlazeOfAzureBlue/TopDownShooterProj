@@ -25,5 +25,5 @@ MonoBehaviour:
   CurrentReserves: 5
   MagazineSize: 1
   CurrentAmmo: 1
-  ReloadTime: 3
+  ReloadTime: 0
   Reloadable: 1

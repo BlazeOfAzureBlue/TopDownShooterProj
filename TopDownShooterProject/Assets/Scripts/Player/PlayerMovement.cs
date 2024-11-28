@@ -33,6 +33,6 @@ public class PlayerMovement : MonoBehaviour
            verticalMovement *= speedLimiter;
         }
 
-        rigidBody.velocity = new Vector2(horizontalMovement * MoveSpeed, verticalMovement * MoveSpeed);
+        rigidBody.velocity = new Vector2(horizontalMovement, verticalMovement).normalized * MoveSpeed;
     }
 }
