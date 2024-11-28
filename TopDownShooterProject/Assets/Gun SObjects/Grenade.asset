@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b51b064eb0ca82843b5aec7c7f225c0f, type: 3}
+  m_Name: Grenade
+  m_EditorClassIdentifier: 
+  audio: {fileID: 0}
+  weaponSprite: {fileID: 0}
+  weapon: {fileID: 0}
+  WeaponName: Grenade
+  damage: 0
+  firerate: 2
+  bulletcount: 0
+  bullet: {fileID: 3263426340583053036, guid: c98436b1413fa7c479f5fa00f7a4e7a3, type: 3}
+  HeldDownWeapon: 1
+  MaxAmmo: 4
+  CurrentReserves: 4
+  MagazineSize: 1
+  CurrentAmmo: 1
+  ReloadTime: 1
+  Reloadable: 1
