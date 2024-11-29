@@ -17,6 +17,8 @@ public class PlayerHealthScript : MonoBehaviour
     private float Timer;
 
     public TMP_Text playerHealthGUI;
+    public SoundManager soundManager;
+    public EnemyManager enemyManager;
 
     private void Start()
     {
@@ -43,6 +45,7 @@ public class PlayerHealthScript : MonoBehaviour
         int NewSpawn = UnityEngine.Random.Range(0, RespawnPoints.Length);
         player.transform.position = RespawnPoints[NewSpawn].transform.position;
         PlayerHealth = PlayerMaxHealth;
+        playerHealthGUI.text = PlayerHealth.ToString() + " / " + PlayerMaxHealth.ToString();
         player.SetActive(true);
         playerDead = false;
     }
@@ -60,11 +63,14 @@ public class PlayerHealthScript : MonoBehaviour
             PlayerHealth -= 1;
             Invincibilityframe = false;
             playerHealthGUI.text = PlayerHealth.ToString() + " / " + PlayerMaxHealth.ToString();
-            if(PlayerHealth <= 0)
+            soundManager.PlaySound("HitSound");
+            if (PlayerHealth <= 0)
             {
                 playerDead = true;
                 player.SetActive(false);
                 StartCoroutine(RespawnPlayer());
+                soundManager.PlaySound("Death");
+                enemyManager.Death();
             }
         }
     }

@@ -34,31 +34,38 @@ public class EnemyScript : MonoBehaviour
 
     public GameObject HealthPickup;
     public GameObject AmmoPickup;
-    PlayerHealthScript playerHealth; 
+
+    PlayerHealthScript playerHealth;
+    SoundManager soundManager;
 
     // Start is called before the first frame update
     void Start()
     {
         health = maxHealth;
         rigidbody = GetComponent<Rigidbody2D>();
-        playerCharacter = GameObject.Find("Player").transform;
-        enemyManager = GameObject.Find("EnemyManager").GetComponent<EnemyManager>();
+        enemyManager = GameObject.Find("GameManager").GetComponent<EnemyManager>();
         playerHealth = GameObject.Find("GameManager").GetComponent<PlayerHealthScript>();
+        soundManager = GameObject.Find("GameManager").GetComponent<SoundManager>();
 
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(BeenZapped == true)
+        {
+            BeenZapped = false;
+        }
         if(MindBlasted == false && playerHealth.playerDead == false)
         {
+            playerCharacter = GameObject.Find("Player").transform;
             Vector3 direction = (playerCharacter.position - transform.position).normalized;
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             rigidbody.rotation = angle;
             moveDirection = direction;
             rigidbody.velocity = new Vector2(moveDirection.x, moveDirection.y) * moveSpeed;
         }
-        else
+        else if(MindBlasted == true)
         {
             PreviousMag = 1000f;
             GameObject closestEnemy = null;
@@ -100,10 +107,12 @@ public class EnemyScript : MonoBehaviour
         {
             EnemyScript enemyCode = gameObject.gameObject.GetComponent<EnemyScript>();
             enemyCode.TakeDamage(1);
+            soundManager.PlaySound("HitShot");
         }
         else if(collision.gameObject.CompareTag("Player"))
         { 
             playerHealth.OnHit();
+            soundManager.PlaySound("HitShot");
         }
     }
     public void IncreasePoison()
@@ -207,10 +216,13 @@ public class EnemyScript : MonoBehaviour
         if(IsFrozen == true && damageAmount > 0.1)
         {
             Destroy(gameObject);
+            soundManager.PlaySound("Ice Shatter");
         }
         health -= damageAmount;
-        if(health <= 0)
+        soundManager.PlaySound("HitSound");
+        if (health <= 0)
         {
+            soundManager.PlaySound("Death");
             int RandomChance = UnityEngine.Random.Range(0, 11);
             if(RandomChance == 5)
             {

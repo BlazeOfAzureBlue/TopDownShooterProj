@@ -9,7 +9,7 @@ public class WeaponManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        AmmoManager = GameObject.Find("AmmoManager").GetComponent<AmmoManagement>();
+        AmmoManager = GameObject.Find("GameManager").GetComponent<AmmoManagement>();
         foreach(Weapon weapon in AmmoManager.WeaponList)
         {
 

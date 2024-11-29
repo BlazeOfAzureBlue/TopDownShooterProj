@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
-using UnityEditor.ShaderKeywordFilter;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UIElements;
@@ -15,6 +14,8 @@ public class WeaponShoot : MonoBehaviour
     public GameObject Player;
     public GameObject gun;
     public AmmoManagement AmmoManager;
+    public SoundManager soundManager;
+    public GameObject WeaponListGUI;
     private Vector3 mousePos;
     private Camera mainCamera;
 
@@ -92,6 +93,18 @@ public class WeaponShoot : MonoBehaviour
     }
 
     // Update is called once per frame
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if(WeaponInformation.WeaponName == "Chainsaw" && Input.GetMouseButton(0))
+        {
+            if(collision.transform.CompareTag("Enemy"))
+            {
+                EnemyScript enemyCode = collision.transform.GetComponent<EnemyScript>();
+                enemyCode.TakeDamage(WeaponInformation.damage);
+            }
+        }
+    }
     void Update()
     {
         if(FrostRayBeingHeld == false)
@@ -108,7 +121,7 @@ public class WeaponShoot : MonoBehaviour
                 }
             }
 
-        if(Input.GetMouseButtonUp(0))
+        if(Input.GetMouseButtonUp(0) && WeaponListGUI.activeInHierarchy == false)
         {
             MinigunTimeHeld = 0;
             if (WeaponInformation.WeaponName == "Flamethrower" && FlamethrowerActive == false)
@@ -135,6 +148,7 @@ public class WeaponShoot : MonoBehaviour
             if (WeaponInformation.WeaponName == "Crossbow" && CrossbowBeingHeld == true)
             {
                 AmmoManager.FireShot();
+                soundManager.PlaySound("Crossbow");
                 createdBullet = Instantiate(bullet, BulletTransform.transform.position, Quaternion.identity);
                 createdBullet.transform.position = BulletTransform.transform.position;
                 CrossbowScript crossbowCode = createdBullet.GetComponent<CrossbowScript>();
@@ -148,7 +162,7 @@ public class WeaponShoot : MonoBehaviour
                 m_lineRenderer.enabled = false;
             }
         }
-        if(Input.GetMouseButton(0) && CanFire)
+        if(Input.GetMouseButton(0) && CanFire && WeaponListGUI.activeInHierarchy == false)
         {
             if(WeaponInformation.WeaponName == "Flamethrower" && FlamethrowerActive == true && AmmoManager.CurrentGunCurrentMag > 0)
             {
@@ -162,7 +176,7 @@ public class WeaponShoot : MonoBehaviour
             {
                 print("Ok");
                 AmmoManager.FireShot();
-                if(AmmoManager.CurrentGunCurrentMag < 0)
+                if (AmmoManager.CurrentGunCurrentMag < 0)
                 {
                     FlamethrowerActive = true;
                     Destroy(createdBullet);
@@ -173,6 +187,7 @@ public class WeaponShoot : MonoBehaviour
                 MinigunTimeHeld += Time.deltaTime;
                 if(MinigunTimeHeld > 2 && CanFire && AmmoManager.CurrentGunCurrentMag > 0)
                 {
+                    soundManager.PlaySound("Minigun");
                     AmmoManager.FireShot();
                     CanFire = false;
                     createdBullet = Instantiate(bullet, BulletTransform.transform.position, Quaternion.identity);
@@ -192,6 +207,7 @@ public class WeaponShoot : MonoBehaviour
                 PunchTimeHeld += Time.deltaTime;
                 if(PunchTimeHeld > 1 && CanFire && FistActive == false)
                 {
+                    soundManager.PlaySound("Punch");
                     FistActive = true;
                     CanFire = false;
                     mousePos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
@@ -240,6 +256,7 @@ public class WeaponShoot : MonoBehaviour
                 CrossbowTimeHeld += Time.deltaTime;
                 if (CrossbowTimeHeld >= 5)
                 {
+                    soundManager.PlaySound("Crossbow");
                     AmmoManager.FireShot();
                     createdBullet = Instantiate(bullet, BulletTransform.transform.position, Quaternion.identity);
                     createdBullet.transform.position = BulletTransform.transform.position;
@@ -253,20 +270,23 @@ public class WeaponShoot : MonoBehaviour
         }
 
         
-        if (Input.GetMouseButtonDown(0) && CanFire)
+        if (Input.GetMouseButtonDown(0) && CanFire && WeaponListGUI.activeInHierarchy == false)
         {
+            print("ok");
             if (WeaponInformation.HeldDownWeapon == false && AmmoManager.CurrentGunCurrentMag > 0)
             {
                 if (WeaponInformation.WeaponName != "Chain Lightning")
                 {
                     if (WeaponInformation.WeaponName != "Mind Blast")
                     {
+                        soundManager.PlaySound(WeaponInformation.WeaponName);
                         AmmoManager.FireShot();
                         CanFire = false;
                         createdBullet = Instantiate(bullet, BulletTransform.transform.position, BulletTransform.transform.rotation);
                     }
                     else
                     {
+                        soundManager.PlaySound("Mind Blast");
                         AmmoManager.FireShot();
                         CanFire = false;
                         createdBullet = Instantiate(bullet, BulletTransform.transform.position + transform.forward * 5, gun.transform.rotation * Quaternion.Euler(new Vector3(0f, 0f, 90f)));
@@ -307,12 +327,13 @@ public class WeaponShoot : MonoBehaviour
                     RaycastHit2D _hit = Physics2D.Raycast(m_transform.position, transform.right);
                     if (_hit.collider.gameObject.tag == "Enemy")
                     {
+                        soundManager.PlaySound("Lightning");
                         EnemyScript enemyCode = _hit.collider.gameObject.GetComponent<EnemyScript>();
                         enemyCode.BeenZapped = true;
                         enemyCode.TakeDamage(WeaponInformation.damage);
                         createdBullet = Instantiate(bullet, _hit.collider.gameObject.transform.position, Quaternion.identity);
                         createdBullet.transform.parent = _hit.collider.gameObject.transform;
-                        GameObject electricmanage = GameObject.Find("ElectricManagement");
+                        GameObject electricmanage = GameObject.Find("GameManager");
                         ElectricManager removeelectric = electricmanage.AddComponent<ElectricManager>();
                         removeelectric.ActivateDestruction(createdBullet);
                     }

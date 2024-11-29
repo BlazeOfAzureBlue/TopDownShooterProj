@@ -17,7 +17,7 @@ MonoBehaviour:
   weapon: {fileID: 0}
   WeaponName: Grappling Hook
   damage: 0
-  firerate: 0
+  firerate: 5
   bulletcount: 0
   bullet: {fileID: 2443983164012935397, guid: 3bbf62437ab0bc64eaf0acc4b5950ed9, type: 3}
   HeldDownWeapon: 0

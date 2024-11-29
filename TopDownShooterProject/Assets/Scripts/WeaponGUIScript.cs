@@ -6,6 +6,7 @@ public class WeaponGUIScript : MonoBehaviour
 {
 
     public GameObject WeaponListGUI;
+    public bool GUIActive = false;
 
     private bool debounce;
     private float Timer;
@@ -34,11 +35,13 @@ public class WeaponGUIScript : MonoBehaviour
             {
                 debounce = false;
                 WeaponListGUI.SetActive(false);
+                GUIActive = false;
             }
             else if(WeaponListGUI.activeInHierarchy == false)
             {
                 debounce = false;
                 WeaponListGUI.SetActive(true);
+                GUIActive = true;
             }
         }
     }

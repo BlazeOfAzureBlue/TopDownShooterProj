@@ -10,6 +10,7 @@ public class ExplosionAOE : MonoBehaviour
     private float weaponDamage;
 
     private SpriteRenderer sprite;
+    private SoundManager audioManager;
 
 
     // Start is called before the first frame update
@@ -17,6 +18,8 @@ public class ExplosionAOE : MonoBehaviour
     {
         sprite = GetComponent<SpriteRenderer>();
         StartCoroutine(FadeOut());
+        audioManager = GameObject.Find("GameManager").GetComponent<SoundManager>();
+        audioManager.PlaySound("Explosion");
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

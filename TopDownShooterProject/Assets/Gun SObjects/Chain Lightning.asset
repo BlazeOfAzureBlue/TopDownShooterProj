@@ -16,8 +16,8 @@ MonoBehaviour:
   weaponSprite: {fileID: 0}
   weapon: {fileID: 0}
   WeaponName: Chain Lightning
-  damage: 0
-  firerate: 0
+  damage: 4
+  firerate: 3
   bulletcount: 0
   bullet: {fileID: 1672774094166147080, guid: eb9cb509c8d3fb8449a535bae15dd88e, type: 3}
   HeldDownWeapon: 0

@@ -11,6 +11,8 @@ public class Cyberprojection : MonoBehaviour
     private Vector3 mousePos;
     private GameObject gun;
 
+    public SoundManager audioManager;
+
     bool TPReady = true;
     float timer = 0;
     // Start is called before the first frame update
@@ -18,6 +20,7 @@ public class Cyberprojection : MonoBehaviour
     {
         rigidBody = GetComponent<Rigidbody2D>();
         MainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+        audioManager = GameObject.Find("GameManager").GetComponent<SoundManager>();
         gun = GameObject.Find("Gun");
     }
 
@@ -43,7 +46,8 @@ public class Cyberprojection : MonoBehaviour
 
     public void CyberProjection()
     {
-
+        TPReady = false;
+        audioManager.PlaySound("Teleport");
         Vector3 mousePos = MainCamera.ScreenToWorldPoint(Input.mousePosition);
         Vector2 direction = (mousePos - gun.transform.position).normalized;
         float distanceToMouse = Vector2.Distance(rigidBody.position, mousePos);

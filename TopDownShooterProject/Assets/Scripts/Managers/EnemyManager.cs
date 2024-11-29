@@ -1,4 +1,4 @@
-using System.Collections;
+    using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -17,6 +17,14 @@ public class EnemyManager : MonoBehaviour
         foreach(GameObject gameObj in enemyList)
         {
             enemies.Add(gameObj);
+        }
+    }
+
+    public void Death()
+    {
+        foreach (GameObject gameObj in enemyList)
+        {
+            Destroy(gameObj);
         }
     }
 }

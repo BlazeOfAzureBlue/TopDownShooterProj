@@ -13,7 +13,7 @@ public class WeaponMenuButton : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        AmmoManager = GameObject.Find("AmmoManager").GetComponent<AmmoManagement>();
+        AmmoManager = GameObject.Find("GameManager").GetComponent<AmmoManagement>();
         gun = GameObject.Find("Gun");
 
         

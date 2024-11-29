@@ -16,8 +16,8 @@ MonoBehaviour:
   weaponSprite: {fileID: 0}
   weapon: {fileID: 0}
   WeaponName: Fireball
-  damage: 1
-  firerate: 1
+  damage: 3
+  firerate: 3
   bulletcount: 0
   bullet: {fileID: 2844033802292246588, guid: 121f3da479003834b87f00d67726be47, type: 3}
   HeldDownWeapon: 0

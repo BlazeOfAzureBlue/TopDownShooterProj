@@ -16,8 +16,14 @@ MonoBehaviour:
   weaponSprite: {fileID: 0}
   weapon: {fileID: 0}
   WeaponName: Fist
-  damage: 0
+  damage: 2
   firerate: 0
   bulletcount: 0
   bullet: {fileID: 8728996037786826558, guid: 31b68834febdfd246ae7f88185e7fc9a, type: 3}
   HeldDownWeapon: 1
+  MaxAmmo: 0
+  CurrentReserves: 0
+  MagazineSize: 0
+  CurrentAmmo: 0
+  ReloadTime: 0
+  Reloadable: 0

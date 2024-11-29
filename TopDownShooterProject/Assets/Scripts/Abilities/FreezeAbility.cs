@@ -12,10 +12,12 @@ public class FreezeAbility : MonoBehaviour
 
     private bool FreezeAbilityAvailable = true;
     private GameObject FreezeAOE;
+
+    public SoundManager audioManager;
     // Start is called before the first frame update
     void Start()
     {
-        
+        audioManager = GameObject.Find("GameManager").GetComponent<SoundManager>();
     }
 
     // Update is called once per frame
@@ -25,6 +27,7 @@ public class FreezeAbility : MonoBehaviour
         {
             FreezeAbilityAvailable = false;
             FreezeAOE = Instantiate(FreezeAOEPrefab, Player.transform.position, Quaternion.identity);
+            audioManager.PlaySound("Ice Blast");
             StartCoroutine(ActivateAOE());
         }
     }

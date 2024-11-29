@@ -30,7 +30,6 @@ public class Bullet : MonoBehaviour
         {
             if(collision.transform.CompareTag("Enemy"))
             {
-                print("ok");
                 weaponDamage = gun.GetComponent<WeaponShoot>().WeaponInformation.damage;
                 EnemyScript enemyCode = collision.transform.GetComponent<EnemyScript>();
                 enemyCode.TakeDamage(weaponDamage);

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2868109193123599918}
   - component: {fileID: 9023873098939365309}
   - component: {fileID: 3129382533341848816}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Triangle
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -99,9 +99,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 202cd449a02408f40b1a5b298c3592c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 2
-  maxHealth: 2
-  moveSpeed: 3
+  health: 5
+  maxHealth: 5
+  moveSpeed: 5
   BeenZapped: 0
   MindBlasted: 0
   HealthPickup: {fileID: 549811678384642944, guid: a2d20d7033f23b0449fd3e43ff512fc3, type: 3}

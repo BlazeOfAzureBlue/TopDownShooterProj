@@ -55,7 +55,7 @@ public class ChainLightningAOE : MonoBehaviour
                         LightningCounter += 1;
                         GameObject bullet = gun.GetComponent<WeaponShoot>().WeaponInformation.bullet;
                         createdBullet = Instantiate(bullet, ClosestEnemy.gameObject.transform.position, Quaternion.identity);
-                        GameObject electricmanage = GameObject.Find("ElectricManagement");
+                        GameObject electricmanage = GameObject.Find("GameManager");
                         ElectricManager removeelectric = electricmanage.AddComponent<ElectricManager>();
                         enemyCode.TakeDamage(gun.GetComponent<WeaponShoot>().WeaponInformation.damage * (gun.GetComponent<WeaponShoot>().WeaponInformation.damage * (0.15f * LightningCounter)));
                         removeelectric.ActivateDestruction(createdBullet);

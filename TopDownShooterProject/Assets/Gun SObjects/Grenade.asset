@@ -16,7 +16,7 @@ MonoBehaviour:
   weaponSprite: {fileID: 0}
   weapon: {fileID: 0}
   WeaponName: Grenade
-  damage: 0
+  damage: 6
   firerate: 2
   bulletcount: 0
   bullet: {fileID: 3263426340583053036, guid: c98436b1413fa7c479f5fa00f7a4e7a3, type: 3}

@@ -16,8 +16,8 @@ MonoBehaviour:
   weaponSprite: {fileID: 0}
   weapon: {fileID: 0}
   WeaponName: Missile Launcher
-  damage: 1
-  firerate: 1
+  damage: 4
+  firerate: 3
   bulletcount: 0
   bullet: {fileID: 9144380040719207203, guid: d4ca2700f93cb804caa99b7f8c3140e0, type: 3}
   HeldDownWeapon: 0

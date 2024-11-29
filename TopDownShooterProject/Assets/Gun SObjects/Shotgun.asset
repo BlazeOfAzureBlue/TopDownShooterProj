@@ -16,8 +16,8 @@ MonoBehaviour:
   weaponSprite: {fileID: 0}
   weapon: {fileID: 0}
   WeaponName: Shotgun
-  damage: 0
-  firerate: 0
+  damage: 3
+  firerate: 2
   bulletcount: 3
   bullet: {fileID: 835693465414495003, guid: f1f628cb3dc075441b798ec6b9dfe52e, type: 3}
   HeldDownWeapon: 0

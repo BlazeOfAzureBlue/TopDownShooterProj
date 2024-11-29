@@ -16,7 +16,7 @@ MonoBehaviour:
   weaponSprite: {fileID: 0}
   weapon: {fileID: 0}
   WeaponName: Rifle
-  damage: 1
+  damage: 3
   firerate: 0.1
   bulletcount: 0
   bullet: {fileID: 835693465414495003, guid: f1f628cb3dc075441b798ec6b9dfe52e, type: 3}

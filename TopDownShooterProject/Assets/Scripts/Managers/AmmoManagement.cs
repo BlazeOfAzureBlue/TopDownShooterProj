@@ -85,7 +85,7 @@ public class AmmoManagement : MonoBehaviour
         CurrentGunReloadTime = newWeapon.ReloadTime;
         CurrentGunMaxMag = newWeapon.MagazineSize;
         WeaponName.text = newWeapon.WeaponName;
-        if(newWeapon.WeaponName != "Minigun" && newWeapon.WeaponName != "Fist")
+        if(newWeapon.WeaponName != "Minigun" && newWeapon.WeaponName != "Fist" && currentWeapon.WeaponName != "Chainsaw")
         {
             AmmoCount.text = CurrentGunCurrentMag.ToString() + " / " + CurrentGunCurrentReserveAmmo.ToString();
         }
@@ -104,7 +104,7 @@ public class AmmoManagement : MonoBehaviour
         currentWeapon = GameObject.Find("Gun").GetComponent<WeaponShoot>().WeaponInformation;
         int Index = WeaponList.IndexOf(currentWeapon);
         int IncreaseAmount = Convert.ToInt32(Math.Round(currentWeapon.MaxAmmo * 0.2));
-        if (currentWeapon.WeaponName != "Minigun" && currentWeapon.WeaponName != "Fist")
+        if (currentWeapon.WeaponName != "Minigun" && currentWeapon.WeaponName != "Fist" && currentWeapon.WeaponName != "Chainsaw")
         {
             CurrentGunCurrentReserveAmmo += IncreaseAmount;
             if (CurrentGunCurrentReserveAmmo > currentWeapon.MaxAmmo)
@@ -121,7 +121,7 @@ public class AmmoManagement : MonoBehaviour
             }
         }
         GunTotalAmmo[Index] = CurrentGunCurrentReserveAmmo;
-        if (currentWeapon.WeaponName != "Minigun" && currentWeapon.WeaponName != "Fist")
+        if (currentWeapon.WeaponName != "Minigun" && currentWeapon.WeaponName != "Fist" && currentWeapon.WeaponName != "Chainsaw")
         {
             AmmoCount.text = CurrentGunCurrentMag.ToString() + " / " + CurrentGunCurrentReserveAmmo.ToString();
         }
@@ -140,8 +140,26 @@ public class AmmoManagement : MonoBehaviour
         print(CurrentGunCurrentReserveAmmo);
         AmmoCount.text = "Reloading...";
         yield return new WaitForSeconds(CurrentGunReloadTime);
-        CurrentGunCurrentReserveAmmo = CurrentGunCurrentReserveAmmo - (CurrentGunMaxMag -  CurrentGunCurrentMag);
-        CurrentGunCurrentMag = CurrentGunMaxMag;
+        if((CurrentGunCurrentReserveAmmo - (CurrentGunMaxMag - CurrentGunCurrentMag)) > 0)
+        {
+            CurrentGunCurrentReserveAmmo = CurrentGunCurrentReserveAmmo - (CurrentGunMaxMag - CurrentGunCurrentMag);
+            CurrentGunCurrentMag = CurrentGunMaxMag;
+        }
+        else if(CurrentGunCurrentReserveAmmo > 0)
+        {
+            if((CurrentGunCurrentMag + CurrentGunCurrentReserveAmmo) > CurrentGunMaxMag)
+            {
+                int AmmoChange = CurrentGunMaxMag - CurrentGunCurrentMag;
+                print(AmmoChange);
+                CurrentGunCurrentReserveAmmo -= AmmoChange;
+                CurrentGunCurrentMag += AmmoChange;
+            }
+            else
+            {
+                CurrentGunCurrentMag += CurrentGunCurrentReserveAmmo;
+                CurrentGunCurrentReserveAmmo = 0;
+            }
+        }
         AmmoCount.text = CurrentGunCurrentMag.ToString() + " / " + CurrentGunCurrentReserveAmmo.ToString();
     }
 }

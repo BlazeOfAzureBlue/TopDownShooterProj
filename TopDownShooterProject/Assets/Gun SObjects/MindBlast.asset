@@ -17,7 +17,7 @@ MonoBehaviour:
   weapon: {fileID: 0}
   WeaponName: Mind Blast
   damage: 0
-  firerate: 0
+  firerate: 3
   bulletcount: 0
   bullet: {fileID: 706350579000472656, guid: 3151ac1f1a5c21445a4647ab73b3a921, type: 3}
   HeldDownWeapon: 0
